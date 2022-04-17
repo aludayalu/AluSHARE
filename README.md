@@ -18,7 +18,7 @@ Regards Team Lumatozer
 ## Installation
 
 ```bash
-git clone https://github.com/Lumatozer/Lumatozer-Host
+git clone https://github.com/Lumatozer-Team/AluSHARE
 ```
 
 ```bash
