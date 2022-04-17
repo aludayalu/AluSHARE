@@ -4,15 +4,15 @@ def connect():
 	try:
 		import socket,json,time,requests
 		api_nodes=requests.get("http://127.0.0.1:8080/node")
-		mynode=str(api_nodes.text)
-		host = mynode
-		port = 7777
+		mynode=str(api_nodes.text)[1:-1]
+		host = mynode.split(":")[0]
+		port = int(mynode.split(":")[1])
 		s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 		s.settimeout(1)
-		s.connect(('127.0.0.1', port))
+		s.connect((host, port))
 		s.settimeout(None)
 		s.send("client".encode())
-		time.sleep(0.1)
+		time.sleep(1)
 		s.send("hi".encode())
 		naach=json.dumps({"type":"get","domain":domain})
 		msg = s.recv(1024)
@@ -31,3 +31,5 @@ def connect():
 	except Exception as e:
 		if str(e)=="dictionary update sequence element #0 has length 1; 2 is required":
 			print("File in-existant on the node! Try a different node if you think this is a false alert.")
+		else:
+			print(e)

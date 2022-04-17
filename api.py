@@ -20,7 +20,10 @@ def nodecheck():
 @app.route('/node',methods = ['GET'])
 def giveanynode():
     ip_addr = request.environ['REMOTE_ADDR']
-    selectednode = nodes[random.randint(0, (len(nodes) - 1))]
+    try:
+        selectednode = nodes[random.randint(0, (len(nodes) - 1))]
+    except:
+        selectednode=nodes
     response = make_response(generateMet(selectednode), 200)
     response.mimetype = "text/plain"
     return response
@@ -44,7 +47,9 @@ def getlist():
 @app.route('/addnode',methods = ['POST','GET'])
 def addnode():
     args=request.args
-    ip=args.get("ip")
+    ipport=args.get("ip")
+    ip=str(ipport).split(":")[0]
+    port=int(str(ipport).split(":")[1])
     if (ip==None):
         return "Error : Invalid I.P. addresses are not accepted!"
     else:
@@ -56,8 +61,8 @@ def addnode():
                 response.mimetype = "text/plain"
                 return response
             else:
-                if pinger.ping(ip) == True:
-                    nodes.append(ip)
+                if pinger.ping(ip,port) == True:
+                    nodes.append(ipport)
                     response = make_response(generateMet("Added"), 200)
                     response.mimetype = "text/plain"
                     return response

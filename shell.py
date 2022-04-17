@@ -144,7 +144,8 @@ def upload():
 
 def sync():
     import sync
-    sync.start()
+    myip="force"
+    sync.start(myip)
 
 while True:
     command=input("Rockie >> ")

@@ -7,8 +7,8 @@ def upload(d,e,n):
     import socket,requests,json,random,time,uid
     api_nodes=requests.get("http://127.0.0.1:8080/node")
     mynode=str(api_nodes.text)
-    host = mynode
-    port = 7777
+    host = mynode.split(":")[0]
+    port = mynode.split(":")[1]
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     s.connect(('127.0.0.1', port))
     s.send("dev".encode())

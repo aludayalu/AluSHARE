@@ -1,19 +1,18 @@
-def start():
+def start(myip):
     from requests import get
-    print("------Sync-Initiated------")
-    myip=get('https://api.ipify.org').text
-    myip="127.0.0.1"
-    ip=(get("http://127.0.0.1:8080/node").text)[1:-1]
-    if ip!=myip:
-        print(f'Node selected to Sync with : {ip}\n')
+    print("------Sync--Initiated------")
+    mainip=(get("http://127.0.0.1:8080/node").text)[1:-1]
+    ip=mainip.split(":")[0]
+    port=int(mainip.split(":")[1])
+    if mainip!=myip:
+        print(f'Node selected to Sync with : {mainip}\n')
         import socket,time,json
         s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        port = 7777
-        s.settimeout(0.1)
+        s.settimeout(1)
         s.connect((ip, port))
         s.settimeout(None)
         s.send("hi".encode())
-        time.sleep(0.1)
+        time.sleep(1)
         s.send("hi".encode())
         a=s.recv(1024000)
         msg=str({"type":"sync"})

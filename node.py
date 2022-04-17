@@ -1,4 +1,6 @@
+raddr=''
 def launch():
+    global remoteaddr
     import socket, requests, time, json,msgfilter,informer,nodeverify,sync
     from aludbms import makedb,query
     try:
@@ -15,16 +17,22 @@ def launch():
     s.listen()
     print("Trying to List your node to the api...")
     try:
-        in1=input("Are you using a proxy or tunnelling agent?(yes/no)(default:no) : ")
+        in1=input("Are you using a proxy or tunneling agent?(yes/no)(default:no) : ")
         if in1=="yes" or in1=="y" or in1=="Yes":
             ip = input("Input your tunnelled/proxied address without the scheme : ")
-            req_base = f"http://127.0.0.1:8080/addnode?ip={ip}" 
+            port = input("Port : ")
+            raddr=ip+":"+port
+            req_base = f"http://127.0.0.1:8080/addnode?ip={ip}:{port}"
             addnodereq = get(req_base).text
-        else:
+        elif in1=="no" or in1=="n" or in1=="No":
+            print("Outsourcing I.P.")
             ip = get('https://api.ipify.org').text
-            req_base = f"http://127.0.0.1:8080/addnode?ip={ip}" 
+            req_base = f"http://127.0.0.1:8080/addnode?ip={ip}:{port}" 
             addnodereq = get(req_base).text
-    except:
+            raddr=ip+":"+7777
+    except Exception as e:
+        print(e)
+        raddr="127.0.0.1:7777"
         invisible=True
         addnodereq="Rest-Api is not online."
         print("HUH")
@@ -43,7 +51,7 @@ def launch():
         invisible = True
         print('Listening for new clients on local network')
     try:
-        sync.start()
+        sync.start(raddr)
     except Exception as e:
         print("Error : "+str(e))
     print("Node Init Successful.")
@@ -64,7 +72,7 @@ def launch():
                         client.send("True".encode())
                         if msgfilter.filter(msg,"relayed")!=False:
                             msg["relayed"]="True"
-                            informer.inform(msg,ip)
+                            informer.inform(msg,remoteaddr)
                     elif nodeverify.check(msg)==False:
                         client.send("False".encode())
                 elif msgfilter.filter(msg,"type")=="get":

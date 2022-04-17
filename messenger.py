@@ -1,8 +1,8 @@
 import socket,json,time
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-port = 7777
 def message(msg: dict,ip):
-    host = ip
+    host = ip.split(":")[0]
+    port = ip.split(":")[1]
     s.settimeout(0.1)
     s.connect((ip, port))
     s.settimeout(None)
