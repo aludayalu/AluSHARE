@@ -21,8 +21,7 @@ logo="""""""""
                                                                  / %%%%%%%%%%%,%%%%%%                                                                 
                                                                       %%%%%%%%%%                                                                      
                                                                           %%%                                                                                                              
-"""""""""kody-k had no activity during this period.
-￼Show more activity
+"""""""""
 
 print(logo)
 loggedin=False
