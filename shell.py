@@ -129,7 +129,7 @@ def UwU():
     webbrowser.open(url, new=0, autoraise=True)
 
 def credits():
-    print("The project was made by Team Lumatozer. More than 85% contributions are solely done by Aarav Dayal Himself.\nMay the Ducks rule the world!")
+    print("The project was made by Team Lumatozer.\nMay the Ducks rule the world!")
 
 def browse():
     import browser
