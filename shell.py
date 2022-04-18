@@ -21,7 +21,9 @@ logo="""""""""
                                                                  / %%%%%%%%%%%,%%%%%%                                                                 
                                                                       %%%%%%%%%%                                                                      
                                                                           %%%                                                                                                              
-"""""""""
+"""""""""kody-k had no activity during this period.
+￼Show more activity
+
 print(logo)
 loggedin=False
 d=0
@@ -116,16 +118,6 @@ def ifconfig():
     from requests import get
     ip = get('https://api.ipify.org').text
     print("Your Computers Public IP Address is : " + ip)
-
-def uwu():
-    import webbrowser
-    url="https://www.youtube.com/watch?v=zRHmhtwA2Hk"
-    webbrowser.open(url, new=0, autoraise=True)
-
-def UwU():
-    import webbrowser
-    url="https://www.youtube.com/watch?v=zRHmhtwA2Hk"
-    webbrowser.open(url, new=0, autoraise=True)
 
 def credits():
     print("The project was made by Team Lumatozer.\nMay the Ducks rule the world!")
