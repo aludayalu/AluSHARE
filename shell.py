@@ -43,7 +43,6 @@ def login():
     global d
     global e
     global n
-    from Crypto.PublicKey import RSA
     try:
         file = open("keys.ltz", "r+").read()
     except:

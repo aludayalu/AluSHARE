@@ -1,7 +1,7 @@
 def start(myip):
     from requests import get
     print("------Sync--Initiated------")
-    mainip=(get("http://127.0.0.1:8080/node").text)[1:-1]
+    mainip=(get("https://ltzapi.loca.lt/node").text)[1:-1]
     ip=mainip.split(":")[0]
     port=int(mainip.split(":")[1])
     if mainip!=myip:

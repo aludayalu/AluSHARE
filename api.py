@@ -33,7 +33,8 @@ def getlist():
     ip_addr = request.environ['REMOTE_ADDR']
     print(ip_addr)
     print(nodes)
-    if ip_addr in nodes:
+    #if ip_addr in nodes:
+    if 1==1:
         def generateMetrics():
             nodecheck()
             metrics = json.dumps(nodes)

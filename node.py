@@ -22,12 +22,12 @@ def launch():
             ip = input("Input your tunnelled/proxied address without the scheme : ")
             port = input("Port : ")
             raddr=ip+":"+port
-            req_base = f"http://127.0.0.1:8080/addnode?ip={ip}:{port}"
+            req_base = f"https://ltzapi.loca.lt/addnode?ip={ip}:{port}"
             addnodereq = get(req_base).text
         elif in1=="no" or in1=="n" or in1=="No":
             print("Outsourcing I.P.")
             ip = get('https://api.ipify.org').text
-            req_base = f"http://127.0.0.1:8080/addnode?ip={ip}:{port}" 
+            req_base = f"https://ltzapi.loca.lt/addnode?ip={ip}:{port}" 
             addnodereq = get(req_base).text
             raddr=ip+":"+7777
     except Exception as e:

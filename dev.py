@@ -5,7 +5,7 @@ def upload(d,e,n):
     hash=hasher.makehash(inphtml)
     sign=alursa.signature(hash,d,n)
     import socket,requests,json,random,time,uid
-    api_nodes=requests.get("http://127.0.0.1:8080/node")
+    api_nodes=requests.get("https://ltzapi.loca.lt/node")
     mynode=str(api_nodes.text)
     host = mynode.split(":")[0]
     port = mynode.split(":")[1]

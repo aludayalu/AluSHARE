@@ -3,7 +3,7 @@ def connect():
 	domain=input("Input domain name : ")
 	try:
 		import socket,json,time,requests
-		api_nodes=requests.get("http://127.0.0.1:8080/node")
+		api_nodes=requests.get("https://ltzapi.loca.lt/node")
 		mynode=str(api_nodes.text)[1:-1]
 		host = mynode.split(":")[0]
 		port = int(mynode.split(":")[1])
