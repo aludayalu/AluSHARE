@@ -7,18 +7,22 @@ def upload(d,e,n):
     import socket,requests,json,random,time,uid
     api_nodes=requests.get("https://ltzapi.loca.lt/node")
     mynode=str(api_nodes.text)
-    host = mynode.split(":")[0]
-    port = mynode.split(":")[1]
+    host = str(mynode.split(":")[0])[1:]
+    port = int(str(mynode.split(":")[1])[:-1])
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    s.connect(('127.0.0.1', port))
+    s.connect((host, port))
+    print("Initiating 3 Step Handshake")
     s.send("dev".encode())
-    time.sleep(0.1)
+    print("Step 1")
+    time.sleep(0.4)
     s.send("hi".encode())
-    msg=s.recv(1024000)
-    print(msg)
-    time.sleep(0.1)
+    print("Step 2")
+    msg=s.recv(1024000).decode()
+    print("Step 3 : Successful Handshake with Node")
+    time.sleep(0.5)
     domainuid=uid.gen()
     domain=domainuid
+    print("Uploading Data")
     postmsg=json.dumps({"type":"post","domain":domain,"html":inphtml,"e":e,"n":n,"sign":sign})
     s.send(postmsg.encode())
     status=s.recv(1024000).decode()

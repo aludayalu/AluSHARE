@@ -1,7 +1,7 @@
 raddr=''
 def launch():
     global remoteaddr
-    import socket, requests, time, json,msgfilter,informer,nodeverify,sync
+    import socket, requests, time, json,msgfilter,nodeverify,sync
     from aludbms import makedb,query
     try:
         open("chain.aludb","r+")
@@ -62,17 +62,15 @@ def launch():
                 msgenc = client.recv(1024)
                 msg = str(msgenc.decode())
                 if msg == "hi":
+                    print("Sending 3rd Handshake")
                     client.send("yo".encode())
-                    print("Normalized")
+                    print("Successful Handshake")
                 elif msgfilter.filter(msg,"type")=="post":
                     if nodeverify.check(msg)==True:
                         domain=str(msgfilter.filter(msg,"domain"))
                         html=str(msgfilter.filter(msg,"html"))
                         query.add("chain",{domain:html})
                         client.send("True".encode())
-                        if msgfilter.filter(msg,"relayed")!=False:
-                            msg["relayed"]="True"
-                            informer.inform(msg,remoteaddr)
                     elif nodeverify.check(msg)==False:
                         client.send("False".encode())
                 elif msgfilter.filter(msg,"type")=="get":

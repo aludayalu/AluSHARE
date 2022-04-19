@@ -11,7 +11,9 @@ def generateMet(data):
 
 def nodecheck():
     for x in nodes:
-        if pinger.ping(x)==True:
+        host = x.split(":")[0]
+        port = int(x.split(":")[1])
+        if pinger.ping(host,port)==True:
             print(x," Is still up and running")
         else:
             nodes.remove(x)

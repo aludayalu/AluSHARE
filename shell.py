@@ -1,4 +1,3 @@
-import time
 logo="""""""""
                                                                        %%%%%.%                                                                       
                                                                     %%%% %%%%%%%%%%                                                                   
@@ -22,7 +21,6 @@ logo="""""""""
                                                                       %%%%%%%%%%                                                                      
                                                                           %%%                                                                                                              
 """""""""
-
 print(logo)
 loggedin=False
 d=0
@@ -97,7 +95,6 @@ def news():
 def logo():
     print(logo)
 
-
 def ipconfig():
     import socket
     hostname = socket.gethostname()
@@ -131,11 +128,6 @@ def upload():
         dev.upload(d,e,n)
     else:
         print("You are not logged in! Please issue the login/signup command.")
-
-def sync():
-    import sync
-    myip="force"
-    sync.start(myip)
 
 while True:
     command=input("Rockie >> ")
