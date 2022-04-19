@@ -1,7 +1,7 @@
 raddr=''
 def launch():
     global remoteaddr
-    import socket, requests, time, json,msgfilter,nodeverify,sync
+    import socket, requests, time, json,msgfilter,nodeverify,hasher
     from aludbms import makedb,query
     try:
         open("chain.aludb","r+")
@@ -50,10 +50,6 @@ def launch():
         print("Launching node in invisible mode")
         invisible = True
         print('Listening for new clients on local network')
-    try:
-        sync.start(raddr)
-    except Exception as e:
-        print("Error : "+str(e))
     print("Node Init Successful.")
     def client_thread(client):
         global all_clients
@@ -66,31 +62,32 @@ def launch():
                     client.send("yo".encode())
                     print("Successful Handshake")
                 elif msgfilter.filter(msg,"type")=="post":
+                    print("Incoming Post Request")
                     if nodeverify.check(msg)==True:
-                        domain=str(msgfilter.filter(msg,"domain"))
+                        print("Integirty Verification Passed!")
                         html=str(msgfilter.filter(msg,"html"))
+                        domain=hasher.makehash(html)
                         query.add("chain",{domain:html})
                         client.send("True".encode())
+                        time.sleep(0.4)
+                        client.send(domain.encode())
+                        print("Successful Upload!")
                     elif nodeverify.check(msg)==False:
+                        print("Integirty Verification Failed!")
                         client.send("False".encode())
                 elif msgfilter.filter(msg,"type")=="get":
+                    print("Incoming GET Request!")
                     try:
                         domain=msgfilter.filter(msg,"domain")
                         result=json.dumps(query.get("chain",domain))
                         if result=="False":
+                            print("Requested File Does Not Exist On Our Node!")
                             client.send("File does not exist/corrupted!".encode())
                         else:
+                            print("File Hash Found! Sending File!")
                             client.send(str(result).encode())
                     except:
                         client.send("File does not exist/corrupted!".encode())
-                elif msgfilter.filter(msg,"type")=="sync":
-                    try:
-                        print("Dumping DB for syncing.")
-                        file=open("chain.aludb","r+")
-                        data=str(json.dumps(file.read()))
-                        s.send(data.encode())
-                    except Exception as e:
-                        client.send(("Sync Error : ").encode())
             except Exception as e:
                 print("Client Disconnected!")
                 client.close()

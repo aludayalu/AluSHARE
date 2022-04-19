@@ -1,31 +1,28 @@
-hashtooutput = 'xxxxxxxxxxxxxxxxxxxxxxxx'
-hashlength = len(hashtooutput)
-lastnum = '0'
-
+hashtooutput = 'xxxxxxxxxxxxxxxx'
 def currentletterhasher(letter,seq):
     number = ord(letter)
     currenthash = int(number) % int(seq)
     return currenthash
 
 def loophash(stringletter):
-    global hashtooutput
-    stringord = ord(stringletter)
     sequence = 1
     outputh = ''
-    ll = "f"
+    lastletter = 'F'
     for letter in hashtooutput:
         sequence = sequence + 1
         hashletter = letter
         currentord = ord(hashletter)
-        lastord = ord(ll)
-        processhash = chr(round((currentletterhasher(letter,sequence)+currentletterhasher(ll,sequence))*(stringord)))
+        lastord =  ord(lastletter)
+        stringord = ord(stringletter)
+        processhash = chr(round((currentletterhasher(lastletter,sequence)+lastord+currentletterhasher(hashletter,ord(stringletter))*(round(len(outputh)+sequence)))))
         outputh = str(processhash) + str(outputh)
-        ll = letter
+        lastletter = letter
     return outputh
-def makehash(msg):
+
+def makehash(estreng):
     global hashtooutput
-    hashtooutput='xxxxxxxxxxxxxxxxxxxxxxxx'
-    for char in msg:
-        a = loophash(char)
-        hashtooutput=a
+    hashtooutput = 'xxxxxxxxxxxxxxxx'
+    for letter in estreng:
+        k = loophash(letter)
+        hashtooutput = k
     return hashtooutput.encode().hex()

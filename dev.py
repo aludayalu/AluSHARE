@@ -20,15 +20,15 @@ def upload(d,e,n):
     msg=s.recv(1024000).decode()
     print("Step 3 : Successful Handshake with Node")
     time.sleep(0.5)
-    domainuid=uid.gen()
-    domain=domainuid
     print("Uploading Data")
-    postmsg=json.dumps({"type":"post","domain":domain,"html":inphtml,"e":e,"n":n,"sign":sign})
+    postmsg=json.dumps({"type":"post","html":inphtml,"e":e,"n":n,"sign":sign})
     s.send(postmsg.encode())
     status=s.recv(1024000).decode()
     if status=="True":
         print("Sent")
+        domainuid=s.recv(1024).decode()
         print("Your uid was : " + domainuid)
-        print("Upload uri : " + domain)
+    elif status=="False":
+        print("Confirmed False Upload!")
     else:
         print("File upload failed!")
