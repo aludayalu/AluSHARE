@@ -64,7 +64,7 @@ def launch():
                 elif msgfilter.filter(msg,"type")=="post":
                     print("Incoming Post Request")
                     if nodeverify.check(msg)==True:
-                        print("Integirty Verification Passed!")
+                        print("Integrity Verification Passed!")
                         html=str(msgfilter.filter(msg,"html"))
                         domain=hasher.makehash(html)
                         query.add("chain",{domain:html})
@@ -73,7 +73,7 @@ def launch():
                         client.send(domain.encode())
                         print("Successful Upload!")
                     elif nodeverify.check(msg)==False:
-                        print("Integirty Verification Failed!")
+                        print("Integrity Verification Failed!")
                         client.send("False".encode())
                 elif msgfilter.filter(msg,"type")=="get":
                     print("Incoming GET Request!")
