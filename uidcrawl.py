@@ -8,15 +8,17 @@ def test(ip,uid):
     s.connect((host, port))
     s.settimeout(None)
     s.send("dev".encode())
-    time.sleep(0.4)
+    time.sleep(0.5)
     s.send("hi".encode())
-    msg=s.recv(1024000).decode()
+    msg=s.recv(1024)
     message=json.dumps({"type":"get","domain":uid})
     s.send(message.encode())
     msg=s.recv(1024000).decode()
     if msg=="File does not exist/corrupted!":
+        s.close()
         return False
     else:
+        s.close()
         return msg
 
 def crawl(uid):

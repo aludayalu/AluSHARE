@@ -1,6 +1,10 @@
+from os import stat
+
+
 def upload(d,e,n):
     print("Welcome to the dev-ops section of the network")
-    inphtml=input("Enter the data u want to be uploaded either in the form of html or plain text : ")
+    inphtml=input("Enter the data u want to be uploaded either in the form of plain text or basic html : ")
+    #input("Enter the data u want to be uploaded either in the form of plain text or basic html : ")
     import alursa,hasher
     hash=hasher.makehash(inphtml)
     sign=alursa.signature(hash,d,n)
@@ -14,7 +18,7 @@ def upload(d,e,n):
     print("Initiating 3 Step Handshake")
     s.send("dev".encode())
     print("Step 1")
-    time.sleep(0.4)
+    time.sleep(0.5)
     s.send("hi".encode())
     print("Step 2")
     msg=s.recv(1024000).decode()
@@ -22,8 +26,11 @@ def upload(d,e,n):
     time.sleep(0.5)
     print("Uploading Data")
     postmsg=json.dumps({"type":"post","html":inphtml,"e":e,"n":n,"sign":sign,"orighash":hash})
-    s.send(postmsg.encode())
-    status=s.recv(1024000).decode()
+    try:
+        s.send(postmsg.encode())
+    except Exception as e:
+        print(e+" huh")
+    status=s.recv(1024).decode()
     if status=="True":
         print("Sent")
         domainuid=s.recv(1024).decode()

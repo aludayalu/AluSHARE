@@ -12,8 +12,10 @@ def launch():
     from threading import Thread
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     invisible = False
-    s.bind(("0.0.0.0", 7777))
-    print("Binding port 7777")
+    p=input("Port to listen at : ")
+    p=int(p)
+    s.bind(("0.0.0.0", p))
+    print("Binding port "+str(p))
     s.listen()
     print("Trying to List your node to the api...")
     try:
@@ -29,10 +31,10 @@ def launch():
             ip = get('https://api.ipify.org').text
             req_base = f"https://ltzapi.loca.lt/addnode?ip={ip}:{port}" 
             addnodereq = get(req_base).text
-            raddr=ip+":"+7777
+            raddr=ip+":"+str(p)
     except Exception as e:
         print(e)
-        raddr="127.0.0.1:7777"
+        raddr="127.0.0.1:"+str(p)
         invisible=True
         addnodereq="Rest-Api is not online."
         print("HUH")
@@ -69,7 +71,7 @@ def launch():
                         domain=hasher.makehash(html)
                         query.add("chain",{domain:html})
                         client.send("True".encode())
-                        time.sleep(0.4)
+                        time.sleep(0.5)
                         client.send(domain.encode())
                         print("Successful Upload!")
                     elif nodeverify.check(msg)==False:
@@ -99,8 +101,7 @@ def launch():
             if invisible==True:
                 if "127.0.0.1" in addr:
                     all_clients.append(client)
-                    print("\n------NEW--SOCKET-CONNECTION------")
-                    print("----------------------------------")
+                    print("\n------NEW-SOCKET-CONNECTION------\n----------------------------------")
                     srvenc = client.recv(1024)
                     srvmsg = str(srvenc.decode())
                     if srvmsg == "api-ping":

@@ -20,9 +20,12 @@ def loophash(stringletter):
     return outputh
 
 def makehash(estreng):
-    global hashtooutput
-    hashtooutput = 'xxxxxxxxxxxxxxxx'
-    for letter in estreng:
-        k = loophash(letter)
-        hashtooutput = k
-    return hashtooutput.encode().hex()
+    try:
+        global hashtooutput
+        hashtooutput = 'xxxxxxxxxxxxxxxx'
+        for letter in estreng:
+            k = loophash(letter)
+            hashtooutput = k
+        return hashtooutput.encode('utf-8', 'replace').hex()
+    except Exception as e:
+        print("Hashing Error : ",e)
