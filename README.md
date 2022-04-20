@@ -5,6 +5,7 @@ Purely Developed and Compiled in Python.
 
 ## Status
 We are almost ready to launch our beta program for the project.\
+The Beta Version will only have features for basic HTML and Text hosting only.\
 As soon as we are done setting up some sample nodes we will start our beta program.\
 Regards Team Lumatozer
 
@@ -26,7 +27,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-
+To Launch Rockie ( In-Built CLI Assistant )
 ```bash
 python shell.py
 ```
@@ -48,7 +49,8 @@ rockie >> launchnode
 To Browse The Network
 ```bash
 rockie >> browse
-Input domain name : ( the uid of the upload )
+Welcome to the decentralized browser :)
+Input The Hash Of The File You Need To Find : ( hash )
 ```
 To Upload A File
 ```bash
@@ -57,7 +59,7 @@ rockie >> upload
 Welcome to the dev-ops section of the network
 Enter the data u want to be uploaded either in the form of html or plain text : (data here)
 Sent
-Your UID was : ( copy the value here )
+Your Hash Was : ( copy the value here )
 ```
 
 ## Contributing
