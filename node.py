@@ -60,16 +60,17 @@ def launch():
                 msgenc = client.recv(1024)
                 msg = str(msgenc.decode())
                 if msg == "hi":
+                    print("Received 2nd Handshake")
                     print("Sending 3rd Handshake")
                     client.send("yo".encode())
-                    print("Successful Handshake")
+                    print("Successful Handshake!")
                 elif msgfilter.filter(msg,"type")=="post":
                     print("Incoming Post Request")
                     if nodeverify.check(msg)==True:
                         print("Integrity Verification Passed!")
                         html=str(msgfilter.filter(msg,"html"))
                         domain=hasher.makehash(html)
-                        query.add("chain",{domain:html})
+                        query.add("chain",html)
                         client.send("True".encode())
                         time.sleep(0.5)
                         client.send(domain.encode())
@@ -108,7 +109,11 @@ def launch():
                         client.close()
                         all_clients.remove(client)
                         print("Api-Ping socket")
+                    elif srvmsg=="":
+                        print("Empty Handshake Request!\nCLient Disconnected!")
+                        client.close()
                     else:
+                        print("Initiating Handshake")
                         thread = Thread(target=client_thread, args=(client,))
                         thread.start()
                 else:
@@ -122,7 +127,11 @@ def launch():
                     client.close()
                     all_clients.remove(client)
                     print("Api-Ping socket was established")
+                elif srvmsg=="":
+                    print("Empty Handshake Request!\nCLient Disconnected!")
+                    client.close()
                 else:
+                    print("Initiating Handshake")
                     thread = Thread(target=client_thread, args=(client,))
                     thread.start()
         except:

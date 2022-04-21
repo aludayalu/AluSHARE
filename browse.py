@@ -3,15 +3,16 @@ def connect():
 	domain=input("Input The Hash Of The File You Need To Find : ")
 	from importlib import reload
 	try:
-		import socket,json,time,requests,uidcrawl,hasher,browser
-		reload(uidcrawl)
-		income=uidcrawl.crawl(domain)
+		import socket,json,time,requests,hashcrawl,hasher,browser
+		reload(hashcrawl)
+		income=hashcrawl.crawl(domain)
 		if income!=False:
 			print("Found Document!")
-			html= dict(json.loads(income))[domain]
+			html= income[1:-1]
 			if domain!=hasher.makehash(html):
 				print("The File Received Was Tampered!")
-			browser.start(html)
+			else:
+				browser.start(html)
 		else:
 			print("File does not exist/corrupted on this node! Try a different node if you think this is a false alert.")
 	except Exception as e:
