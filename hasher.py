@@ -1,31 +1,29 @@
-hashtooutput = 'xxxxxxxxxxxxxxxx'
+hashtooutput="xxxxxxxxxxxxxxxxxxxx"
+lastletter="#"
 def currentletterhasher(letter,seq):
     number = ord(letter)
     currenthash = int(number) % int(seq)
     return currenthash
+def chargen(char):
+    global hashtooutput
+    global lastletter
+    out=''
+    lastnum = ''
+    numbers = ''
+    lastord = '1'
+    lastord =  ord(lastletter)
+    sequence=1
+    for x in hashtooutput:
+        sequence+=1
+        newchr=(chr(currentletterhasher(lastletter,sequence)+lastord+currentletterhasher(x,ord(char))*(round(len(out)/sequence))))
+        out+=str(newchr)
+        lastord=ord(x)
+    hashtooutput=out
+    return hashtooutput
 
-def loophash(stringletter):
-    sequence = 1
-    outputh = ''
-    lastletter = 'F'
-    for letter in hashtooutput:
-        sequence = sequence + 1
-        hashletter = letter
-        currentord = ord(hashletter)
-        lastord =  ord(lastletter)
-        stringord = ord(stringletter)
-        processhash = chr(round((currentletterhasher(lastletter,sequence)+lastord+currentletterhasher(hashletter,ord(stringletter))*(round(len(outputh)+sequence)))))
-        outputh = str(processhash) + str(outputh)
-        lastletter = letter
-    return outputh
-
-def makehash(estreng):
-    try:
-        global hashtooutput
-        hashtooutput = 'xxxxxxxxxxxxxxxx'
-        for letter in estreng:
-            k = loophash(letter)
-            hashtooutput = k
-        return hashtooutput.encode('utf-8', 'replace').hex()
-    except Exception as e:
-        print("Hashing Error : ",e)
+def makehash(msg):
+    global hashtooutput
+    hashtooutput="xxxxxxxxxxxxxxxxxxxx"
+    for x in msg:
+        chargen(x)
+    return (hashtooutput.encode().hex())[6:]
