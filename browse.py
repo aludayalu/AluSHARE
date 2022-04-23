@@ -5,11 +5,12 @@ def connect():
 	try:
 		import socket,json,time,requests,hashcrawl,hasher,browser
 		reload(hashcrawl)
-		income=hashcrawl.crawl(domain)
+		inning=hashcrawl.crawl(domain)
+		income=inning
 		if income!=False:
 			print("Found Document!")
-			html= income[1:-1]
-			if domain!=hasher.makehash(html):
+			html=income
+			if domain!=hasher.makehash(income):
 				print("The File Received Was Tampered!")
 			else:
 				browser.start(html)

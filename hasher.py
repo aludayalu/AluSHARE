@@ -4,6 +4,7 @@ def currentletterhasher(letter,seq):
     number = ord(letter)
     currenthash = int(number) % int(seq)
     return currenthash
+
 def chargen(char):
     global hashtooutput
     global lastletter

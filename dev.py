@@ -1,14 +1,23 @@
-from os import stat
-
-
 def upload(d,e,n):
     print("Welcome to the dev-ops section of the network")
-    inphtml=input("Enter the data u want to be uploaded either in the form of plain text or basic html : ")
-    #input("Enter the data u want to be uploaded either in the form of plain text or basic html : ")
+    choice=input("Do you want to upload a html/txt file or raw txt/html?( 1=raw, 2=file ) : ")
+    if choice=="2":
+        try:
+            fn=input("Enter the file name : ")
+            inphtml=open(fn).read()
+        except Exception as e:
+            print("Unable To Find File!")
+            print(e)
+            inphtml=input("Enter the data u want to be uploaded either in the form of plain text or basic html : ")
+    elif choice=="1":
+        inphtml=input("Enter the data u want to be uploaded either in the form of plain text or basic html : ")
+    else:
+        print("Invalid Choice")
+        quit()
     import alursa,hasher
     hash=hasher.makehash(inphtml)
     sign=alursa.signature(hash,d,n)
-    import socket,requests,json,random,time,uid
+    import socket,requests,json,random,time
     api_nodes=requests.get("https://ltzapi.loca.lt/node")
     mynode=str(api_nodes.text)
     host = str(mynode.split(":")[0])[1:]
@@ -27,7 +36,7 @@ def upload(d,e,n):
     print("Uploading Data")
     postmsg=json.dumps({"type":"post","html":inphtml,"e":e,"n":n,"sign":sign,"orighash":hash})
     try:
-        s.send(postmsg.encode())
+        s.send(postmsg.encode('utf-8', 'replace'))
     except Exception as e:
         print(e+" huh")
     status=s.recv(1024).decode()

@@ -68,7 +68,7 @@ def launch():
                     print("Incoming Post Request")
                     if nodeverify.check(msg)==True:
                         print("Integrity Verification Passed!")
-                        html=str(msgfilter.filter(msg,"html"))
+                        html=(str(msgfilter.filter(msg,"html")))
                         domain=hasher.makehash(html)
                         query.add("chain",html)
                         client.send("True".encode())
@@ -82,7 +82,7 @@ def launch():
                     print("Incoming GET Request!")
                     try:
                         domain=msgfilter.filter(msg,"domain")
-                        result=json.dumps(query.get("chain",domain))
+                        result=(query.get("chain",domain))
                         if result=="False":
                             print("Requested File Does Not Exist On Our Node!")
                             client.send("File does not exist/corrupted!".encode())
