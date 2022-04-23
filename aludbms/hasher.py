@@ -1,4 +1,4 @@
-hashtooutput="xxxxxxxxxxxxxxxxxxxx"
+hashtooutput="xxxxxxxxxxxxxxxxxxxxxxxx"
 lastletter="#"
 def currentletterhasher(letter,seq):
     number = ord(letter)
@@ -24,7 +24,7 @@ def chargen(char):
 
 def makehash(msg):
     global hashtooutput
-    hashtooutput="xxxxxxxxxxxxxxxxxxxx"
+    hashtooutput="xxxxxxxxxxxxxxxxxxxxxxxx"
     for x in msg:
         chargen(x)
     return (hashtooutput.encode().hex())[6:]
